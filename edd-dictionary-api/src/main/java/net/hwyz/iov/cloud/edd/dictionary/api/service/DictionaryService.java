@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(contextId = "dictionaryService", value = ServiceNameConstants.EDD_DICTIONARY, path = "/service/dictionary", fallbackFactory = DictionaryServiceFallbackFactory.class)
+@FeignClient(contextId = "dictionaryService", value = ServiceNameConstants.EDD_DICTIONARY, path = "/api/service/dictionary/v1", fallbackFactory = DictionaryServiceFallbackFactory.class)
 public interface DictionaryService {
 
     @GetMapping(value = "/{code}")
