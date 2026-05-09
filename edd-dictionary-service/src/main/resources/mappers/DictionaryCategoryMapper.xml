@@ -208,4 +208,13 @@
             </if>
         </if>
     </select>
+
+    <!-- 根据code查询数据字典分类 -->
+    <select id="selectPoByCode" parameterType="java.lang.String" resultMap="baseResultMap">
+        SELECT <include refid="baseColumnList"/>
+        FROM tb_dictionary_category t
+        WHERE t.code = #{code}
+        AND t.row_valid = 1
+        LIMIT 1
+    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package net.hwyz.iov.cloud.tsp.dictionary.service;
+package net.hwyz.iov.cloud.edd.dictionary.service;
 
 import cn.hutool.json.JSONUtil;
 import net.hwyz.iov.cloud.framework.common.constant.CustomHeaders;
@@ -18,11 +18,6 @@ public class BaseTest {
 
     protected String vin = "HWYZTEST000000001";
 
-    /**
-     * 创建Header
-     *
-     * @return 测试Header
-     */
     protected HttpHeaders newHttpHeader() {
         Map<String, Object> map = new HashMap<>(2);
         map.put(CustomHeaders.CLIENT_ID, "clientId");

@@ -199,4 +199,13 @@
         WHERE t.row_valid = 1
         <!-- 添加自定义条件 -->
     </select>
+
+    <!-- 根据categoryId查询数据字典列列表 -->
+    <select id="selectListByCategoryId" parameterType="java.lang.Long" resultMap="baseResultMap">
+        SELECT <include refid="baseColumnList"/>
+        FROM tb_dictionary_column t
+        WHERE t.category_id = #{categoryId}
+        AND t.row_valid = 1
+        ORDER BY t.sort ASC, t.id ASC
+    </select>
 </mapper>
