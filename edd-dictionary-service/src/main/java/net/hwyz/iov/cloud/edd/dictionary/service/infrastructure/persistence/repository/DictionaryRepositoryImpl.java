@@ -7,6 +7,7 @@ import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.conv
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.mapper.DictionaryCategoryMapper;
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.mapper.DictionaryMapper;
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.po.DictionaryPo;
+import net.hwyz.iov.cloud.framework.web.util.PageUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,4 +41,37 @@ public class DictionaryRepositoryImpl implements DictionaryRepository {
     public List<Map<String, Object>> queryTableData(String tableName, Map<String, String> columns, Map<String, Object> whereConditions, String conditionSymbol) {
         return dictionaryCategoryMapper.selectTable(tableName, columns, whereConditions, conditionSymbol);
     }
+
+    @Override
+    public Dictionary findById(Long id) {
+        return DictionaryConverter.INSTANCE.toDomain(dictionaryMapper.selectPoById(id));
+    }
+
+    @Override
+    public List<Dictionary> findAll() {
+        List<DictionaryPo> poList = dictionaryMapper.selectPoByExample(null);
+        return PageUtil.convert(poList, DictionaryConverter.INSTANCE::toDomain);
+    }
+
+    @Override
+    public List<Dictionary> findByMap(Map<String, Object> map) {
+        List<DictionaryPo> poList = dictionaryMapper.selectPoByMap(map);
+        return PageUtil.convert(poList, DictionaryConverter.INSTANCE::toDomain);
+    }
+
+    @Override
+    public int update(Dictionary dictionary) {
+        return dictionaryMapper.updatePo(DictionaryConverter.INSTANCE.toPo(dictionary));
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        return dictionaryMapper.physicalDeletePo(id);
+    }
+
+    @Override
+    public int batchDelete(Long[] ids) {
+        return dictionaryMapper.batchPhysicalDeletePo(ids);
+    }
+
 }

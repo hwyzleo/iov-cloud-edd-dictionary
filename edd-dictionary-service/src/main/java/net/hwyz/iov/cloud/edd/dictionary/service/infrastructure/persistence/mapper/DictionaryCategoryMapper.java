@@ -25,4 +25,16 @@ public interface DictionaryCategoryMapper extends BaseDao<DictionaryCategoryPo, 
 
     List<Map<String, Object>> selectTable(String tableName, Map<String, String> columns, Map<String, Object> whereConditions, String conditionSymbol);
 
+    List<Map<String, Object>> selectTableList(String tableName, Map<String, String> columns);
+
+    List<Map<String, Object>> selectTableListWithWhere(String tableName, Map<String, String> columns, String whereClause);
+
+    Map<String, Object> selectTableById(String tableName, Map<String, String> columns, Long id);
+
+    int insertTableData(String tableName, Map<String, Object> data);
+
+    int updateTableData(String tableName, Long id, Map<String, Object> data);
+
+    int deleteTableData(String tableName, Long id);
+
 }

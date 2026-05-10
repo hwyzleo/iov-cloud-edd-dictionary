@@ -10,9 +10,11 @@ import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.mapp
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.mapper.DictionaryColumnMapper;
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.po.DictionaryCategoryPo;
 import net.hwyz.iov.cloud.edd.dictionary.service.infrastructure.persistence.po.DictionaryColumnPo;
+import net.hwyz.iov.cloud.framework.web.util.PageUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -69,4 +71,67 @@ public class DictionaryCategoryRepositoryImpl implements DictionaryCategoryRepos
         List<DictionaryColumnPo> columnPoList = DictionaryColumnConverter.INSTANCE.toPoList(columns);
         dictionaryCategoryMapper.createTable(tableName, tableDesc, columnPoList, uniqueColumns);
     }
+
+    @Override
+    public List<Map<String, Object>> selectTableList(String tableName, Map<String, String> columns) {
+        return dictionaryCategoryMapper.selectTableList(tableName, columns);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectTableListWithWhere(String tableName, Map<String, String> columns, String whereClause) {
+        return dictionaryCategoryMapper.selectTableListWithWhere(tableName, columns, whereClause);
+    }
+
+    @Override
+    public Map<String, Object> selectTableById(String tableName, Map<String, String> columns, Long id) {
+        return dictionaryCategoryMapper.selectTableById(tableName, columns, id);
+    }
+
+    @Override
+    public void insertTableData(String tableName, Map<String, Object> data) {
+        dictionaryCategoryMapper.insertTableData(tableName, data);
+    }
+
+    @Override
+    public void updateTableData(String tableName, Long id, Map<String, Object> data) {
+        dictionaryCategoryMapper.updateTableData(tableName, id, data);
+    }
+
+    @Override
+    public void deleteTableData(String tableName, Long id) {
+        dictionaryCategoryMapper.deleteTableData(tableName, id);
+    }
+
+    @Override
+    public DictionaryCategory findById(Long id) {
+        return DictionaryCategoryConverter.INSTANCE.toDomain(dictionaryCategoryMapper.selectPoById(id));
+    }
+
+    @Override
+    public List<DictionaryCategory> findAll() {
+        List<DictionaryCategoryPo> poList = dictionaryCategoryMapper.selectPoByExample(null);
+        return PageUtil.convert(poList, DictionaryCategoryConverter.INSTANCE::toDomain);
+    }
+
+    @Override
+    public List<DictionaryCategory> findByMap(Map<String, Object> map) {
+        List<DictionaryCategoryPo> poList = dictionaryCategoryMapper.selectPoByMap(map);
+        return PageUtil.convert(poList, DictionaryCategoryConverter.INSTANCE::toDomain);
+    }
+
+    @Override
+    public int update(DictionaryCategory category) {
+        return dictionaryCategoryMapper.updatePo(DictionaryCategoryConverter.INSTANCE.toPo(category));
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        return dictionaryCategoryMapper.physicalDeletePo(id);
+    }
+
+    @Override
+    public int batchDelete(Long[] ids) {
+        return dictionaryCategoryMapper.batchPhysicalDeletePo(ids);
+    }
+
 }

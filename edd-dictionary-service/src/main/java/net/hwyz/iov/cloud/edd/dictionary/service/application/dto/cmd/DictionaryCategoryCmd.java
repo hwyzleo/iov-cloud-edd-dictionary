@@ -13,9 +13,20 @@ import java.util.List;
 @AllArgsConstructor
 public class DictionaryCategoryCmd {
 
+    private Long id;
+
     private Long pid;
+
     private String name;
+
     private String code;
+
     private String type;
+
+    private Boolean enable;
+
+    private Integer sort;
+
     private List<DictionaryColumnCmd> columns;
+
 }

@@ -112,8 +112,17 @@
 
     <!-- 物理删除 -->
     <delete id="physicalDeletePo" parameterType="Long">
-        DELETE FROM tb_dictionary_column t
-        WHERE t.id = #{value}
+        DELETE FROM tb_dictionary_column
+        WHERE id = #{value}
+    </delete>
+
+    <!-- 批量物理删除 -->
+    <delete id="batchPhysicalDeletePo" parameterType="Long">
+        DELETE FROM tb_dictionary_column
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
     <!-- 根据主键获取对应数据 -->

@@ -1,15 +1,14 @@
-package net.hwyz.iov.cloud.edd.dictionary.service.application.dto.cmd;
+package net.hwyz.iov.cloud.edd.dictionary.service.adapter.web.vo.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.hwyz.iov.cloud.framework.common.bean.BaseRequest;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DictionaryColumnCmd {
+@EqualsAndHashCode(callSuper = true)
+public class DictionaryColumnRequest extends BaseRequest {
 
     private Long id;
 

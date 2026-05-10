@@ -100,8 +100,17 @@
 
     <!-- 物理删除 -->
     <delete id="physicalDeletePo" parameterType="Long">
-        DELETE FROM tb_dictionary t
-        WHERE t.id = #{value}
+        DELETE FROM tb_dictionary
+        WHERE id = #{value}
+    </delete>
+
+    <!-- 批量物理删除 -->
+    <delete id="batchPhysicalDeletePo" parameterType="Long">
+        DELETE FROM tb_dictionary
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
     <!-- 根据主键获取对应数据 -->
@@ -167,7 +176,24 @@
         SELECT <include refid="baseColumnList"/>
         FROM tb_dictionary t
         WHERE t.row_valid = 1
-        <!-- 添加自定义条件 -->
+        <if test="name != null and name != ''">
+            AND t.name LIKE #{name}
+        </if>
+        <if test="code != null and code != ''">
+            AND t.code = #{code}
+        </if>
+        <if test="categoryCode != null and categoryCode != ''">
+            AND t.category_code = #{categoryCode}
+        </if>
+        <if test="enable != null">
+            AND t.enable = #{enable}
+        </if>
+        <if test="beginTime != null">
+            AND t.create_time >= #{beginTime}
+        </if>
+        <if test="endTime != null">
+            AND t.create_time &lt;= #{endTime}
+        </if>
         ORDER BY t.id DESC
     </select>
 
@@ -185,6 +211,23 @@
         SELECT COUNT(*)
         FROM tb_dictionary t
         WHERE t.row_valid = 1
-        <!-- 添加自定义条件 -->
+        <if test="name != null and name != ''">
+            AND t.name LIKE #{name}
+        </if>
+        <if test="code != null and code != ''">
+            AND t.code = #{code}
+        </if>
+        <if test="categoryCode != null and categoryCode != ''">
+            AND t.category_code = #{categoryCode}
+        </if>
+        <if test="enable != null">
+            AND t.enable = #{enable}
+        </if>
+        <if test="beginTime != null">
+            AND t.create_time >= #{beginTime}
+        </if>
+        <if test="endTime != null">
+            AND t.create_time &lt;= #{endTime}
+        </if>
     </select>
 </mapper>

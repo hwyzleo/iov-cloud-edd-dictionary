@@ -13,4 +13,17 @@ public interface DictionaryRepository {
     Optional<Dictionary> findByCode(String code);
 
     List<Map<String, Object>> queryTableData(String tableName, Map<String, String> columns, Map<String, Object> whereConditions, String conditionSymbol);
+
+    Dictionary findById(Long id);
+
+    List<Dictionary> findAll();
+
+    List<Dictionary> findByMap(Map<String, Object> map);
+
+    int update(Dictionary dictionary);
+
+    int deleteById(Long id);
+
+    int batchDelete(Long[] ids);
+
 }

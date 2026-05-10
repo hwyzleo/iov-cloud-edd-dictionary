@@ -24,4 +24,5 @@ public interface DictionaryAssembler {
     DictionaryColumn toDomain(DictionaryColumnCmd cmd);
 
     List<DictionaryColumn> toDomainList(List<DictionaryColumnCmd> cmdList);
+
 }

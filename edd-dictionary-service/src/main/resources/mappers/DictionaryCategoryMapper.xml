@@ -96,8 +96,17 @@
 
     <!-- 物理删除 -->
     <delete id="physicalDeletePo" parameterType="Long">
-        DELETE FROM tb_dictionary_category t
-        WHERE t.id = #{value}
+        DELETE FROM tb_dictionary_category
+        WHERE id = #{value}
+    </delete>
+
+    <!-- 批量物理删除 -->
+    <delete id="batchPhysicalDeletePo" parameterType="Long">
+        DELETE FROM tb_dictionary_category
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
     <!-- 根据主键获取对应数据 -->
@@ -179,6 +188,8 @@
             <foreach collection="columns" item="column" index="index" separator=",">
             `${column.code}` ${column.type}<if test="column.type='VARCHAR'">(${column.len})</if> <if test="column.nullable">DEFAULT</if><if test="!column.nullable">NOT</if> NULL COMMENT '${column.name}'
             </foreach>,
+            `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+            `modify_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
             PRIMARY KEY (`id`)
             <if test="uniqueColumns.size > 0">
             ,UNIQUE KEY (<foreach collection="uniqueColumns" item="column" index="index" separator=",">`${column}`</foreach>)
@@ -208,6 +219,66 @@
             </if>
         </if>
     </select>
+
+    <!-- 查询表数据列表 -->
+    <select id="selectTableList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <foreach collection="columns" item="value" index="key" separator=",">
+            ${key} as ${value}
+        </foreach>
+        FROM `tb_${tableName}`
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询表数据列表(带条件) -->
+    <select id="selectTableListWithWhere" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <foreach collection="columns" item="value" index="key" separator=",">
+            ${key} as ${value}
+        </foreach>
+        FROM `tb_${tableName}`
+        <if test="whereClause != null and whereClause != ''">
+            WHERE ${whereClause}
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询表数据详情 -->
+    <select id="selectTableById" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <foreach collection="columns" item="value" index="key" separator=",">
+            ${key} as ${value}
+        </foreach>
+        FROM `tb_${tableName}`
+        WHERE id = #{id}
+    </select>
+
+    <!-- 插入表数据 -->
+    <insert id="insertTableData" parameterType="java.util.Map">
+        INSERT INTO `tb_${tableName}` (
+        <foreach collection="data" item="value" index="key" separator=",">
+            ${key}
+        </foreach>
+        ) VALUES (
+        <foreach collection="data" item="value" index="key" separator=",">
+            #{value}
+        </foreach>
+        )
+    </insert>
+
+    <!-- 更新表数据 -->
+    <update id="updateTableData" parameterType="java.util.Map">
+        UPDATE `tb_${tableName}` SET
+        <foreach collection="data" item="value" index="key" separator=",">
+            ${key} = #{value}
+        </foreach>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除表数据 -->
+    <delete id="deleteTableData" parameterType="java.util.Map">
+        DELETE FROM `tb_${tableName}` WHERE id = #{id}
+    </delete>
 
     <!-- 根据code查询数据字典分类 -->
     <select id="selectPoByCode" parameterType="java.lang.String" resultMap="baseResultMap">

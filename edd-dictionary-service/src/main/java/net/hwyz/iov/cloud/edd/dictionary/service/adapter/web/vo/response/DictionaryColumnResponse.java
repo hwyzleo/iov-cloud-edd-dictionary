@@ -1,15 +1,14 @@
-package net.hwyz.iov.cloud.edd.dictionary.service.application.dto.cmd;
+package net.hwyz.iov.cloud.edd.dictionary.service.adapter.web.vo.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DictionaryColumnCmd {
+public class DictionaryColumnResponse {
 
     private Long id;
 
@@ -32,5 +31,7 @@ public class DictionaryColumnCmd {
     private String valueRange;
 
     private Integer sort;
+
+    private Date createTime;
 
 }
