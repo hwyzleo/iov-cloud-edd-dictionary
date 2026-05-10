@@ -27,7 +27,7 @@ pipeline {
                     dir(DIR_API) {
                         sh '''
                             echo '============================== 构建并发布 =============================='
-                            mvn clean deploy -DaltDeploymentRepository=${REPO_ID}::default::${REPO_URL}
+                            mvn clean deploy -U -DskipTests -DaltDeploymentRepository=${REPO_ID}::default::${REPO_URL}
                         '''
                     }
                 }
