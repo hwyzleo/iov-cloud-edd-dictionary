@@ -16,5 +16,5 @@ public class DictionaryResponse {
 
     private String code;
     private String name;
-    private List<DictionaryItemResponse> items;
+    private List<Map<String, Object>> items;
 }
