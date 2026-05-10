@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mapper
@@ -23,6 +24,7 @@ public interface DictionaryWebAssembler {
         }
         List<DictionaryItemWebResponse> items = result.getItems() == null ? null :
                 result.getItems().stream()
+                        .filter(Objects::nonNull)
                         .map(item -> DictionaryItemWebResponse.builder()
                                 .fields(item)
                                 .build())
@@ -40,6 +42,7 @@ public interface DictionaryWebAssembler {
         }
         List<DictionaryItemResponse> items = result.getItems() == null ? null :
                 result.getItems().stream()
+                        .filter(item -> item != null)
                         .map(item -> DictionaryItemResponse.builder()
                                 .fields(item)
                                 .build())
