@@ -40,7 +40,7 @@ pipeline {
                     sh """
                         echo '============================== 构建镜像 =============================='
                         cp /var/jenkins_home/settings.xml ./${DIR_SERVICE}/settings.xml
-                        docker build ${noCacheArg} -t ${IMAGE_NAME} -f ../Dockerfile ./${DIR_SERVICE}/
+                        docker build --network appnet ${noCacheArg} -t ${IMAGE_NAME} -f ../Dockerfile ./${DIR_SERVICE}/
                     """
                 }
             }
